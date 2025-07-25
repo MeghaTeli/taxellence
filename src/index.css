@@ -1,0 +1,2369 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-green: #1e3a3a;
+  --dark-green: #2e7d32;
+  --light-green: #e8f5e9;
+  --hero-bg-color: #4CAF50;
+  --text-dark: #333;
+  --text-light: rgb(250, 249, 249);
+  --text-header-elements: #faf9f9;
+  --text-gray: #666;
+  --background-light: #f9f9f9;
+  --border-color: #ddd;
+  --card-background: #fff;
+  /* This is the key for modal background */
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --hero-overlay-start: rgba(0, 0, 0, 0.4);
+  --hero-overlay-end: rgba(0, 0, 0, 0.1);
+  --button-hover-bg: #e0e0e0;
+  --footer-bg-dark: #1A2F30;
+  /* Services page backgrounds */
+  --services-grid-section-bg: #f2f6f3;
+  --how-we-work-section-bg: #e1ede8;
+  --why-choose-us-section-bg: var(--background-light);
+  --privacy-policy-section-bg: #e1ede8;
+  /* Auth Page specific colors */
+  --auth-bg-color: #e6f0e6;
+  --auth-text-gray: #888;
+  /* My Files Page specific colors */
+  --my-files-bg: #e6f0e6; /* Light green background from image */
+  --my-files-border: #8bc34a;
+  /* Green border for upload box */
+  --my-files-icon-color: #8bc34a;
+  /* Green color for plus icon */
+}
+
+/* Ensure html and body take full height for correct vh calculation */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--text-dark);
+  line-height: 1.6;
+  background-color: var(--background-light);
+}
+
+.app-container {
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+  background-color: rgba(255, 255, 255, 0);
+  /* Default transparent for hero */
+  padding: 1rem 2rem;
+  box-shadow: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  backdrop-filter: none;
+}
+
+/* Add a class to make header opaque when needed, e.g., on auth pages */
+/* This class will need to be conditionally applied to the Header component in App.jsx */
+.header.solid-bg {
+  background-color: var(--primary-green);
+  /* Solid background for visibility */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional shadow */
+  position: fixed;
+  /* Make it fixed on scroll for other pages */
+}
+
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-header-elements);
+  border-radius: 5px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: auto; /* Add this line to push the nav and subsequent items to the right */
+}
+
+.nav-link {
+  color: var(--text-header-elements);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0.8rem;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  color: var(--primary-green);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sign-in-button {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.sign-in-button:hover {
+  background-color: #888888;
+  transform: translateY(-2px);
+}
+
+/* NEW: Account Menu Styles (for logged-in state) */
+.account-menu-container {
+  position: relative;
+  /* For dropdown positioning */
+  display: inline-block; /* Allows dropdown to position correctly */
+}
+
+.account-icon-button {
+  background-color: var(--primary-green);
+  /* Green background */
+  color: var(--text-light); /* White icon */
+  border: none;
+  border-radius: 50%;
+  /* Circular button */
+  width: 40px; /* Size of the circle */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.account-icon-button:hover {
+  background-color: var(--dark-green); /* Darker green on hover */
+  transform: translateY(-2px);
+}
+
+.account-dropdown-menu {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  right: 0;
+  /* Align to the right of the button */
+  background-color: var(--primary-green);
+  /* Dark green background for dropdown */
+  border-radius: 8px;
+  min-width: 150px;
+  /* Minimum width for dropdown */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 0;
+  z-index: 1001;
+  /* Above header and other content */
+  opacity: 0; /* Start hidden for animation */
+  transform: translateY(10px);
+  /* Start slightly below */
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+/* When dropdown is open, make it visible */
+.account-menu-container .account-dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  color: var(--text-light); /* White text */
+  padding: 0.8rem 1.2rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
+}
+
+
+/* Hero Section Styles */
+.hero-section {
+  position: relative;
+  height: 750px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-light);
+  text-align: left;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  padding: 0 2rem;
+  padding-top: 80px;
+}
+
+.hero-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../src/assets/images/hero-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(50, 117, 117, 0.7), rgb(30, 58, 58));
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  padding: 2rem 0;
+  animation: fadeInLeft 1s ease-out;
+}
+
+.hero-content .tagline {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.hero-content h1 span {
+  color: var(--text-light);
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Schedule Button Styles */
+.schedule-button {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 6px 12px var(--shadow-medium);
+}
+
+.schedule-button:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--primary-green);
+  transform: translateY(-2px);
+}
+
+/* General services-link style (for header, etc.) - unchanged */
+.services-link {
+  background-color: #1e3a3a;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border: 2px solid var(--text-light);
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.services-link:hover {
+  background-color: var(--text-light);
+  color: var(--primary-green);
+  transform: translateY(-2px);
+}
+
+/* Specific style for the "Our Services" button in the Hero Section */
+.hero-services-button {
+  background-color: var(--primary-green);
+  color: var(--primary-green);
+  border: none;
+  box-shadow: 0 6px 12px var(--shadow-medium);
+}
+
+.hero-services-button:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--primary-green);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+
+.hero-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-info-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.hero-info-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-info-item svg {
+  color: var(--text-light);
+}
+
+.personal-tax-strategy-card {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--text-dark);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: left;
+  max-width: 500px;
+  box-shadow: 0 8px 16px var(--shadow-medium);
+  animation: fadeInRight 1s ease-out;
+  margin-left: 2rem;
+}
+
+.personal-tax-strategy-card .card-image {
+  width: 100%;
+  height: 300px;
+  background-image: url('../src/assets/images/hero-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.personal-tax-strategy-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-green);
+}
+
+.personal-tax-strategy-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-gray);
+}
+
+.scroll-down-indicator {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: var(--text-light);
+  animation: bounce 2s infinite;
+}
+/* Add these styles to your index.css file, perhaps near the end or in a dedicated modal section */
+
+/* 1. Modal Overlay (covers the entire screen) */
+.modal-overlay {
+  position: fixed;
+  /* CRITICAL: Stays in place when scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  /* Use flexbox to center the modal content */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* CRITICAL: Ensure it's above all other content */
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 2. Modal Overlay when it's actively open */
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 3. Modal Content Box (the actual form/popup) */
+.modal-content {
+  background-color: var(--card-background);
+  /* White background from your variables */
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  /* Stronger shadow to make it "float" */
+  position: relative;
+  /* For positioning the close button inside */
+  max-width: 500px;
+  /* Maximum width for larger screens */
+  width: 90%;
+
+  transform: translateY(-20px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* 4. Modal Content when its overlay is open (animation effect) */
+.modal-overlay.open .modal-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* 5. Close Button (the X icon) */
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-gray); /* Grey color */
+  padding: 5px;
+  border-radius: 50%;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  display: flex; /* To center the Lucide icon */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-button:hover {
+  color: var(--text-dark); /* Darker on hover */
+  background-color: var(--button-hover-bg);
+  /* Light grey background on hover */
+}
+
+/* 6. Modal Header */
+.modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  color: var(--primary-green); /* Green heading */
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.modal-header p {
+  font-size: 1rem;
+  color: var(--text-gray); /* Grey text */
+}
+
+/* 7. Form Groups (input rows) */
+.modal-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color); /* Light border */
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  background-color: var(--background-light); /* Light background for input fields */
+}
+
+.modal-input-wrapper svg {
+  color: var(--primary-green);
+  /* Green icons */
+  margin-right: 0.8rem;
+}
+
+.modal-input {
+  border: none;
+  outline: none;
+  /* Remove blue outline on focus */
+  width: 100%;
+  font-size: 1rem;
+  padding: 0;
+  /* Reset default input padding to be controlled by wrapper */
+  background-color: transparent;
+  /* Match wrapper background */
+  color: var(--text-dark); /* Dark text input */
+}
+
+.modal-input::placeholder {
+  color: var(--text-gray);
+  opacity: 0.7;
+}
+
+/* 8. Modal Actions (Back/Next buttons) */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  /* Space buttons apart */
+  margin-top: 2rem;
+  gap: 1rem; /* Gap between buttons */
+}
+
+.modal-button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  flex: 1;
+  /* Make buttons take equal width */
+  border: none; /* Remove default button border */
+}
+
+.modal-button.back {
+  background-color: var(--button-hover-bg);
+  /* Light grey */
+  color: var(--text-gray);
+}
+
+.modal-button.back:hover {
+  background-color: #d0d0d0;
+  /* Slightly darker grey on hover */
+  transform: translateY(-2px);
+}
+
+.modal-button.next {
+  background-color: var(--primary-green);
+  /* Dark green */
+  color: var(--text-light); /* Light text */
+  box-shadow: 0 4px 8px var(--shadow-light);
+  /* Subtle shadow */
+}
+
+.modal-button.next:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* New Animation for Cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Services Section Styles (Homepage) */
+.services-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  width: 100%;
+  background-color: var(--light-green);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.services-tag {
+  background-color: var(--light-green);
+  color: var(--primary-green);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  border: 1px solid var(--primary-green);
+}
+
+.services-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.services-section h2 span {
+  color: var(--primary-green);
+}
+
+.services-intro {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-card { /* General service card style for homepage and services page */
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px var(--shadow-medium);
+  border-color: var(--primary-green);
+}
+
+.service-icon {
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+}
+
+.service-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--primary-green);
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: var(--text-gray);
+}
+
+.view-all-services-button {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.view-all-services-button:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+}
+
+/* About Section Styles */
+.about-section {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  padding: 4rem 0;
+  width: 100%;
+  margin: 3rem 0;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px var(--shadow-medium);
+  box-sizing: border-box;
+}
+
+.about-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  flex-direction: row;
+  /* Image on left, content on right */
+}
+
+.about-image-container {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.about-content {
+  flex: 2;
+  min-width: 300px;
+  text-align: left;
+}
+
+.about-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Testimonials Section Styles */
+.testimonials-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  /* Constrain content width */
+  margin: 0 auto; /* Center the section */
+  text-align: center;
+  /* Center overall content like heading and tag */
+  background-color: var(--background-light);
+  /* Assuming a light background for the section */
+}
+
+/* Tag for Testimonials */
+.testimonials-tag-top {
+  background-color: var(--light-green);
+  color: var(--primary-green);
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  display: inline-block;
+  border: 1px solid var(--primary-green);
+}
+
+/* Main heading style */
+.testimonials-main-heading {
+  font-size: 2.8rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* Carousel Wrapper for layout and arrows */
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: calc(100% - 100px); /* Gives space for arrows on sides */
+}
+
+/* Carousel Arrows */
+.carousel-arrow {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-arrow:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow-left {
+  left: -50px;
+}
+
+.carousel-arrow-right {
+  right: -50px;
+}
+
+/* Testimonials Grid - now a scrollable container */
+.testimonials-grid {
+  display: flex;
+  overflow-x: auto;
+  /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory; /* Snap cards into place when scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+  gap: 2rem; /* Gap between cards */
+  padding: 1rem;
+  /* Padding to ensure cards don't touch edges */
+  padding-bottom: 2rem;
+  /* Extra padding for potential scrollbar space */
+  width: 100%;
+  /* Take full width of carousel-wrapper */
+}
+
+/* Hide scrollbar (optional) */
+.testimonials-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials-grid {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Individual Testimonial Card */
+.testimonial-card {
+  background-color: #3b7c7c;
+  /* Card background color matching image */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  padding: 3rem 2.5rem 2rem;
+  flex: 0 0 auto;
+  width: calc(60% - 1.5rem);
+  /* This width will show roughly 1.5 cards on larger screens */
+  min-width: 320px;
+  /* Ensure cards don't get too small on slightly larger screens */
+  scroll-snap-align: center;
+  /* Snap each card to the center when scrolling */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 280px; /* Maintain consistent height */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Testimonial Image Wrapper and Image */
+.testimonial-image-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  background-color: var(--text-light); /* Background for the arc/star area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.testimonial-image {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-green);
+}
+
+/* Simplified Star Effect */
+.testimonial-image-wrapper::after {
+  content: '⭐';
+  position: absolute;
+  bottom: -5px;
+  right: 5px;
+  font-size: 1.2rem;
+  color: orange;
+  background-color: var(--text-light);
+  border-radius: 50%;
+  padding: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+.testimonial-quote {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Services Page Specific Styles */
+.services-page-container {
+  padding-top: 0;
+}
+
+.services-page-hero {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  padding: 10rem 2rem 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.services-page-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  max-width: 800px;
+}
+
+.services-page-hero p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 700px;
+  opacity: 0.9;
+}
+
+/* Services Grid Section (on Services Page) - Background & Animation */
+.services-section-grid {
+  padding: 4rem 0;
+  background-color: var(--services-grid-section-bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.services-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+
+/* Animate service cards */
+.services-section-grid .service-card {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Stagger animation for service cards */
+.services-section-grid .service-card:nth-child(1) { animation-delay: 0.1s; }
+.services-section-grid .service-card:nth-child(2) { animation-delay: 0.2s; }
+.services-section-grid .service-card:nth-child(3) { animation-delay: 0.3s; }
+.services-section-grid .service-card:nth-child(4) { animation-delay: 0.4s; }
+.services-section-grid .service-card:nth-child(5) { animation-delay: 0.5s; }
+.services-section-grid .service-card:nth-child(6) { animation-delay: 0.6s; }
+.services-section-grid .service-card:nth-child(7) { animation-delay: 0.7s; }
+.services-section-grid .service-card:nth-child(8) { animation-delay: 0.8s; }
+.services-section-grid .service-card:nth-child(9) { animation-delay: 0.9s; }
+.services-section-grid .service-card:nth-child(10) { animation-delay: 1.0s; }
+
+
+/* Reuse existing .services-grid and .service-card styles for the cards themselves */
+.services-section-grid .service-card h3 {
+  color: var(--primary-green);
+}
+
+
+/* How We Work Section */
+.how-we-work-section {
+  padding: 4rem 0;
+  background-color: var(--how-we-work-section-bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.how-we-work-content-wrapper {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.how-we-work-section h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.how-we-work-section .work-intro-text {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.work-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem 2rem;
+  justify-content: center;
+}
+
+.work-step-item {
+  background-color: var(--card-background);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-step-item h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  padding-top: 1.5rem;
+  position: relative;
+}
+
+.work-step-item h3::before {
+  content: attr(data-step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--light-green);
+  line-height: 1;
+  z-index: 0;
+  opacity: 0.8;
+  transform: translateY(-50%) translateX(-20px);
+}
+.work-step-item h3 {
+  position: relative;
+  z-index: 1;
+}
+
+.work-step-item p {
+  font-size: 1rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Why Choose Us Section Styles */
+.why-choose-us-section {
+  padding: 4rem 0;
+  background-color:  var(--services-grid-section-bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.why-choose-us-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.why-choose-us-section h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.why-choose-us-intro {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.why-choose-us-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.why-choose-us-item {
+  background-color: var(--card-background);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-choose-us-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.why-choose-us-icon {
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.why-choose-us-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--primary-green);
+}
+
+.why-choose-us-item p {
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+
+/* Privacy Policy Section (within ServicesPage) */
+.privacy-policy-section {
+  padding: 4rem 0;
+  background-color: var(--privacy-policy-section-bg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.privacy-policy-content-wrapper-in-services {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: left;
+}
+
+.privacy-policy-section h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  margin-bottom: 2rem;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.privacy-policy-section h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.privacy-policy-section p {
+  font-size: 1rem;
+  color: var(--text-gray);
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+
+/* Footer Styles */
+.footer {
+  background-color: var(--footer-bg-dark);
+  color: var(--text-light);
+  padding: 4rem 2rem 1.5rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  text-align: left;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-column:first-child {
+  flex-basis: 25%;
+  min-width: 280px;
+}
+
+.footer-column .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+}
+
+.footer-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.footer-column h4 {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+
+.footer-column p,
+.footer-column li {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a:hover {
+  color: var(--light-green);
+}
+
+.footer-column p span {
+  margin-right: 0.5rem;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.footer-column p {
+  margin-bottom: 0.6rem;
+}
+
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 1.5rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+  display: inline;
+}
+
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: var(--light-green);
+}
+
+
+/* Auth Page Specific Styles */
+.auth-page-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--auth-bg-color);
+  padding: 2rem;
+  box-sizing: border-box;
+  padding-top: 80px;
+  /* Adjust based on your header's height (e.g., 60px + some buffer) */
+}
+
+.auth-form-card {
+  background-color: var(--card-background);
+  padding: 3rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  /* Default max-width for sign-in */
+  width: 100%;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.signup-form-card {
+  max-width: 700px; /* Increased max-width for sign-up */
+}
+
+
+.auth-form-card h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+}
+
+.auth-form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.auth-input-group {
+  text-align: left;
+  margin-bottom: 0.6rem;
+}
+
+.auth-input-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+
+.auth-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  background-color: var(--background-light);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-input-wrapper:focus-within {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(30, 58, 58, 0.2);
+}
+
+.auth-icon {
+  color: var(--primary-green);
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+}
+
+.auth-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0;
+  background-color: transparent;
+  color: var(--text-dark);
+}
+
+.auth-input::placeholder {
+  color: var(--text-gray);
+  opacity: 0.7;
+}
+
+.auth-password-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-gray);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+
+.auth-password-toggle:hover {
+  color: var(--primary-green);
+}
+
+.auth-helper-text {
+  font-size: 0.85rem;
+  color: var(--auth-text-gray);
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+}
+
+.auth-terms-policy {
+  font-size: 0.9rem;
+  color: var(--auth-text-gray);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-terms-policy a {
+  color: var(--primary-green);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.auth-terms-policy a:hover {
+  text-decoration: underline;
+}
+
+.auth-recaptcha-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--auth-text-gray);
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.auth-recaptcha-placeholder input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-green);
+  flex-shrink: 0;
+}
+
+.auth-recaptcha-placeholder .recaptcha-logo {
+  height: 20px;
+  margin-left: auto;
+}
+
+
+.auth-submit-button {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px var(--shadow-light);
+  width: 100%;
+}
+
+.auth-submit-button:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+}
+
+.auth-switch-link {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-top: 1rem;
+}
+
+.auth-switch-link a {
+  color: var(--primary-green);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-switch-link a:hover {
+  text-decoration: underline;
+}
+
+.auth-switch-link-top {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-bottom: 0.8rem;
+}
+
+.auth-switch-link-top a {
+  color: var(--primary-green);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-switch-link-top a:hover {
+  text-decoration: underline;
+}
+
+
+/* My Files Page Styles */
+.my-files-page-container {
+  min-height: 100vh; /* Take full viewport height */
+  background-color: var(--my-files-bg);
+  /* Light green background */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start;
+  /* Align content to start (top) */
+  align-items: center; /* Center content horizontally */
+  padding: 2rem;
+  /* Add padding around the content */
+  box-sizing: border-box;
+  padding-top: 120px;
+  /* Push content down significantly to clear the fixed header */
+}
+
+.my-files-content-wrapper {
+  text-align: center;
+  /* Center text and elements within this wrapper */
+  max-width: 600px;
+  /* Constrain width for readability */
+  width: 100%; /* Take full width up to max-width */
+  padding: 2rem;
+  /* Padding inside the content wrapper */
+  background-color: var(--background-light);
+  /* White background for the content area */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  /* Subtle shadow */
+}
+
+.my-files-instruction {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.my-files-upload-box {
+  width: 120px;
+  /* Size of the box */
+  height: 120px;
+  border: 2px dashed var(--my-files-border);
+  /* Dashed green border */
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1.5rem;
+  /* Center the box and add bottom margin */
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.my-files-upload-box:hover {
+  border-color: var(--primary-green); /* Darker green on hover */
+  background-color: rgba(139, 195, 74, 0.1);
+  /* Light green tint on hover */
+}
+
+.my-files-plus-icon {
+  color: var(--my-files-icon-color);
+  /* Green plus icon */
+  transition: color 0.3s ease;
+}
+
+.my-files-upload-box:hover .my-files-plus-icon {
+  color: var(--primary-green);
+  /* Darker green icon on hover */
+}
+
+.my-files-empty-state {
+  font-size: 1rem;
+  color: var(--text-gray);
+  margin-top: 1.5rem;
+  /* Space above this text */
+  font-style: italic;
+}
+.purchase-summary-content {
+  background-color: var(--card-background);
+  /* Explicitly set white background */
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  max-width: 450px;
+  width: 90%;
+  text-align: center; /* Center content within the card */
+
+  transform: translateY(-20px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* This rule applies when the parent .modal-overlay has the .open class */
+.modal-overlay.open .purchase-summary-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Purchase Summary Header */
+.purchase-summary-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.purchase-summary-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-dark); /* Dark text color as per image */
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+/* Summary Details Section */
+.summary-details {
+  /* Removed borders as they are not in the provided image */
+  border-top: none;
+  border-bottom: none;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  /* Spreads name and amount */
+  align-items: center;
+  margin-bottom: 0.8rem; /* Space between items */
+  font-size: 1rem;
+  color: var(--text-dark); /* Dark text for all regular items */
+}
+
+.summary-item:last-child {
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary-green);
+  /* Green for total price as per image */
+}
+
+/* Summary Actions (Buttons) - Reusing modal-button styles */
+.summary-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.summary-button { /* Inherits from .modal-button, just adding specific overrides */
+  /* No changes needed here, as .modal-button already defines base styles for back/next */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-section {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1rem;
+  }
+  .hero-content {
+    text-align: center;
+    max-width: 100%;
+    padding: 0;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .personal-tax-strategy-card {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+  .hero-info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  .personal-tax-strategy-card {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 0;
+    max-width: 90%;
+  }
+
+  /* About Section - Stacked on smaller screens */
+  .about-content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about-content {
+    text-align: center;
+  }
+  .about-image-container {
+    order: 0;
+  }
+
+  /* Testimonials Section */
+  .carousel-wrapper {
+    max-width: 100%;
+  }
+  .carousel-arrow-left {
+    left: 10px;
+  }
+  .carousel-arrow-right {
+    right: 10px;
+  }
+  .testimonial-card {
+    width: calc(85% - 1.5rem);
+    min-width: 280px;
+  }
+
+  /* Services Page Hero */
+  .services-page-hero h1 {
+    font-size: 2.8rem;
+  }
+  .services-page-hero p {
+    font-size: 1.1rem;
+  }
+
+  /* How We Work Section */
+  .work-steps-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  .work-step-item h3::before {
+    font-size: 3rem;
+  }
+
+  /* Why Choose Us Section */
+  .why-choose-us-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    background-color:var() ;
+  }
+
+  /* Privacy Policy Section (within Services Page) */
+  .privacy-policy-content-wrapper-in-services {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  .privacy-policy-section h1 {
+    font-size: 2.5rem;
+  }
+  .privacy-policy-section h3 {
+    font-size: 1.4rem;
+  }
+  .privacy-policy-section p {
+    font-size: 0.95rem;
+  }
+
+  /* Auth Pages */
+  .auth-page-container {
+    padding: 1rem;
+    padding-top: 80px;
+  }
+  .auth-form-card {
+    padding: 2rem 1.5rem;
+  }
+  .auth-form-card h2 {
+    font-size: 1.8rem;
+  }
+  .auth-input-wrapper {
+    padding: 0.7rem 0.8rem;
+  }
+  .auth-input {
+    font-size: 0.95rem;
+  }
+  .auth-submit-button {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+  .signup-form-card {
+    max-width: 600px;
+  }
+
+  /* My Files Page */
+  .my-files-page-container {
+    padding-top: 80px;
+    /* Consistent padding top */
+  }
+  .my-files-content-wrapper {
+    padding: 1.5rem;
+  }
+  .my-files-instruction {
+    font-size: 1.1rem;
+  }
+  .my-files-upload-box {
+    width: 100px;
+    height: 100px;
+  }
+  .my-files-plus-icon {
+    font-size: 54px;
+  }
+  .my-files-empty-state {
+    font-size: 0.9rem;
+  }
+
+
+  /* Footer adjustments for tablet screens (2 columns) */
+  .footer-content {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 3rem;
+  }
+  .footer-column {
+    flex-basis: calc(50% - 1.5rem);
+    min-width: 280px;
+    padding: 0;
+  }
+  .footer-column:first-child {
+    flex-basis: calc(50% - 1.5rem);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .footer-bottom p {
+    display: block;
+  }
+}
+
+/* --- NEW MOBILE STYLES START HERE (ADDED TO EXISTING MEDIA QUERIES) --- */
+
+/* Mobile Navigation Button (Hamburger) */
+.mobile-menu-button {
+  display: none; /* Hidden by default on larger screens */
+  background: none;
+  border: none;
+  color: var(--text-header-elements);
+  font-size: 2rem; /* Adjusted for size 32 */
+  cursor: pointer;
+  z-index: 1002; /* Ensure it's above other content */
+}
+.mobile-menu-button.hidden-on-mobile-menu-open { /* Renamed for clarity */
+  display: none;
+}
+
+/* Mobile Navigation Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+  z-index: 999; /* Below the menu, above content */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile Navigation Menu */
+.mobile-nav-menu {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Start off-screen */
+  width: 280px; /* Width of the mobile menu */
+  height: 100%;
+  background-color: var(--primary-green); /* Dark green background */
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  transition: right 0.3s ease-out;
+}
+
+.mobile-nav-menu.open {
+  right: 0; /* Slide in */
+}
+
+.mobile-nav-menu .close-button {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 2rem;
+  align-self: flex-end; /* Align to top right */
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.mobile-nav-menu .nav-link {
+  color: var(--text-light);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  text-align: left;
+  display: block; /* Ensure it takes full width */
+}
+
+.mobile-nav-menu .nav-link:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-menu .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-menu .mobile-auth-buttons {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobile-nav-menu .sign-in-button,
+.mobile-nav-menu .account-icon-button {
+  width: 100%;
+  justify-content: center;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: var(--dark-green);
+  color: var(--text-light);
+  display: flex; /* Make it a flex container for centering content */
+  align-items: center;
+  gap: 0.5rem; /* Space between icon and text */
+}
+
+
+.mobile-nav-menu .account-icon-button {
+  border-radius: 8px; /* Not circular in menu */
+  height: auto; /* Adjust height */
+}
+
+.mobile-nav-menu .dropdown-item {
+  color: var(--text-light);
+  padding: 0.8rem 1.2rem;
+  width: 100%;
+  text-align: left;
+  border: none; /* Remove border */
+  background: none;
+}
+
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: row; /* Keep logo and hamburger on one line */
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav, .sign-in-button, .account-menu-container {
+    display: none; /* Hide regular navigation on mobile */
+  }
+  .mobile-menu-button {
+    display: block; /* Show hamburger button */
+  }
+
+
+  .hero-content h1 {
+    font-size: 2.8rem; /* Adjusted for better fit */
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center; /* Center buttons when stacked */
+  }
+  .schedule-button, .services-link {
+    width: 90%; /* Make buttons wider */
+    max-width: 300px; /* Limit max width */
+  }
+  .personal-tax-strategy-card {
+    position: static; /* Remove absolute positioning */
+    margin: 2rem auto; /* Center it below hero content */
+    transform: none;
+    max-width: 90%;
+  }
+  .hero-info-grid {
+    grid-template-columns: 1fr; /* Stack items vertically */
+    gap: 0.8rem; /* Reduce gap */
+    padding: 0 1rem; /* Add horizontal padding */
+  }
+  .hero-info-item {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+    justify-content: center; /* Center content within info item */
+  }
+
+  .services-section h2 {
+    font-size: 2.2rem;
+  }
+  .services-intro {
+    font-size: 1rem;
+  }
+  .services-grid {
+    grid-template-columns: 1fr; /* Stack service cards */
+  }
+
+  .about-content h2 {
+    font-size: 2.2rem;
+  }
+  .about-content p {
+    font-size: 1rem;
+  }
+
+  .testimonials-main-heading {
+    font-size: 2.2rem;
+  }
+  .testimonial-card {
+    width: 90vw;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  .carousel-arrow-left {
+    left: -10px;
+  }
+  .carousel-arrow-right {
+    right: -10px;
+  }
+
+  /* Footer adjustments for tablet screens (2 columns) */
+  .footer-content {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 3rem;
+  }
+  .footer-column {
+    flex-basis: calc(50% - 1.5rem);
+    min-width: 280px;
+    padding: 0;
+  }
+  .footer-column:first-child {
+    flex-basis: calc(50% - 1.5rem);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .footer-bottom p {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+  /* .nav and .sign-in-button remain hidden from 768px breakpoint */
+
+  .hero-section {
+    padding-top: 60px; /* Less padding to lift content */
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  .hero-content p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .schedule-button, .services-link {
+    width: 100%; /* Full width on smaller phones */
+  }
+  .hero-info-item {
+    font-size: 0.8rem; /* Even smaller font for info grid */
+    padding: 0.5rem 0.6rem;
+  }
+  .personal-tax-strategy-card {
+    padding: 1.2rem; /* Reduce card padding */
+  }
+  .personal-tax-strategy-card h3 {
+    font-size: 1.2rem;
+  }
+  .personal-tax-strategy-card p {
+    font-size: 0.85rem;
+  }
+
+  .services-section h2 {
+    font-size: 1.8rem;
+  }
+  .services-intro {
+    font-size: 0.9rem;
+  }
+  .service-card {
+    padding: 1.5rem;
+  }
+  .service-card h3 {
+    font-size: 1.2rem;
+  }
+  .service-card p {
+    font-size: 0.85rem;
+  }
+
+  .about-content h2 {
+    font-size: 1.8rem;
+  }
+  .about-content p {
+    font-size: 0.9rem;
+  }
+
+  .testimonials-main-heading {
+    font-size: 1.8rem;
+  }
+  .testimonial-card {
+    padding: 1.5rem;
+    min-width: 250px; /* Ensure it doesn't get too small */
+  }
+  .testimonial-image-wrapper {
+    width: 70px; /* Smaller image */
+    height: 70px;
+  }
+  .testimonial-image {
+    width: 85%;
+    height: 85%;
+  }
+  .testimonial-quote {
+    font-size: 0.9rem;
+  }
+
+  .footer-column {
+    min-width: unset;
+    width: 100%;
+  }
+
+  /* Services Page Hero */
+  .services-page-hero h1 {
+    font-size: 1.8rem;
+  }
+  .services-page-hero p {
+    font-size: 0.95rem;
+  }
+
+  /* How We Work Section */
+  .how-we-work-section h2 {
+    font-size: 1.8rem;
+  }
+  .work-step-item h3 {
+    font-size: 1.4rem;
+  }
+  .work-step-item h3::before {
+    font-size: 2.5rem;
+    transform: translateY(-50%) translateX(-5px);
+  }
+  .work-step-item p {
+    font-size: 0.9rem;
+  }
+
+  /* Why Choose Us Section */
+  .why-choose-us-section h2 {
+    font-size: 1.8rem;
+  }
+  .why-choose-us-item h3 {
+    font-size: 1.2rem;
+  }
+  .why-choose-us-item p {
+    font-size: 0.85rem;
+  }
+
+  /* Privacy Policy Section (within Services Page) */
+  .privacy-policy-section h1 {
+    font-size: 1.8rem;
+  }
+  .privacy-policy-section h3 {
+    font-size: 1.2rem;
+  }
+  .privacy-policy-section p {
+    font-size: 0.85rem;
+  }
+
+  /* Auth Pages */
+  .auth-form-card {
+    padding: 1rem;
+  }
+  .auth-form-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .auth-input-group {
+    gap: 0.5rem;
+  }
+  .auth-input-wrapper {
+    padding: 0.5rem 0.6rem;
+  }
+  .auth-input {
+    font-size: 0.85rem;
+  }
+  .auth-helper-text {
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+  .auth-password-toggle {
+    font-size: 0.75rem;
+  }
+  .auth-terms-policy {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.75rem;
+  }
+  .auth-recaptcha-placeholder {
+    margin-top: 0.3rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.75rem;
+  }
+  .auth-submit-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+  .auth-switch-link, .auth-switch-link-top {
+    font-size: 0.8rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .purchase-summary-content { /* Responsive adjustment for summary modal */
+    width: 95%;
+    padding: 1.5rem;
+  }
+  .purchase-summary-header h2 {
+    font-size: 1.5rem;
+  }
+  .summary-item {
+    font-size: 0.95rem;
+  }
+  .summary-item:last-child {
+    font-size: 1rem;
+  }
+  .summary-actions {
+    flex-direction: column;
+  }
+  .summary-button {
+    width: 100%;
+  }
+}
