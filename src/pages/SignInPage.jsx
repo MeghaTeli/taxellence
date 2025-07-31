@@ -1,24 +1,46 @@
-// src/pages/AuthPages.jsx
+// src/pages/SignInPage.jsx
 import React, { useState } from 'react';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
+// Define the base URL for your backend API
+const API_BASE_URL = 'http://localhost:5000/api'; // IMPORTANT: Adjust if your backend is on a different URL
+
 // SignInPage component for user login
 const SignInPage = ({ onNavigate, onLoginSuccess }) => {
-    const [username, setUsername] = useState('');
+    const [identifier, setIdentifier] = useState(''); // Can be username or email
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState(''); // State for login error messages
 
     // Handles form submission for sign-in
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real application, you'd send data to a backend for authentication
-        console.log('Attempting sign-in with:', { username, password });
+        setLoginError(''); // Clear previous errors
 
-        // Simulate successful login
-        // REMOVED: alert('Simulated Sign In successful!'); // <--- REMOVE THIS LINE
-        console.log('Simulated Sign In successful! Navigating to home.'); // Added for console debugging
+        try {
+            const response = await fetch(`${API_BASE_URL}/signin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ identifier, password }),
+            });
 
-        onLoginSuccess(); // Call the success handler from App.jsx
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Login successful:', data);
+                localStorage.setItem('token', data.token); // Store JWT token
+                localStorage.setItem('user', JSON.stringify(data.user)); // Store user info
+                onLoginSuccess(); // Call the success handler from App.jsx
+            } else {
+                console.error('Login failed:', data.message);
+                setLoginError(data.message || 'Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Network error during sign-in:', error);
+            setLoginError('Network error. Please try again later.');
+        }
     };
 
     return (
@@ -27,16 +49,16 @@ const SignInPage = ({ onNavigate, onLoginSuccess }) => {
                 <h2>Sign into your account</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="auth-input-group">
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="identifier">Username or Email</label>
                         <div className="auth-input-wrapper">
                             <User size={20} className="auth-icon" />
                             <input
                                 type="text"
-                                id="username"
+                                id="identifier"
                                 className="auth-input"
-                                placeholder="Username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Username or Email"
+                                value={identifier}
+                                onChange={(e) => setIdentifier(e.target.value)}
                                 required
                             />
                         </div>
@@ -64,7 +86,7 @@ const SignInPage = ({ onNavigate, onLoginSuccess }) => {
                                 <span>{showPassword ? 'Hide' : 'Show'}</span>
                             </button>
                         </div>
-                        <p className="auth-helper-text">Use 8 or more characters with a mix of letters, numbers & symbols</p>
+                        {loginError && <p className="auth-helper-text text-red-500">{loginError}</p>}
                     </div>
 
                     <div className="auth-recaptcha-placeholder">
@@ -72,7 +94,7 @@ const SignInPage = ({ onNavigate, onLoginSuccess }) => {
                             <input type="checkbox" required />
                             I'm not a robot
                         </label>
-                        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" className="recaptcha-logo" />
+                        <img src="[https://www.gstatic.com/recaptcha/api2/logo_48.png](https://www.gstatic.com/recaptcha/api2/logo_48.png)" alt="reCAPTCHA" className="recaptcha-logo" />
                     </div>
 
                     <button type="submit" className="auth-submit-button">Sign Into account</button>
@@ -88,25 +110,49 @@ const SignInPage = ({ onNavigate, onLoginSuccess }) => {
 
 // SignUpPage component for user registration
 const SignUpPage = ({ onNavigate }) => {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [signupError, setSignupError] = useState(''); // State for signup error messages
+    const [signupSuccess, setSignupSuccess] = useState(''); // State for signup success message
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setSignupError(''); // Clear previous errors
+        setSignupSuccess(''); // Clear previous success messages
+
         if (password !== confirmPassword) {
-            alert('Passwords do not match!'); // Keep this alert for password mismatch
+            setSignupError('Passwords do not match!');
             return;
         }
-        console.log('Attempting sign-up with:', { name, email, password });
-        // Simulate successful sign-up, then redirect to sign-in page
-        // REMOVED: alert('Simulated Sign Up successful! Please sign in.'); // <--- REMOVE THIS LINE
-        console.log('Simulated Sign Up successful! Navigating to sign in.'); // Added for console debugging
 
-        onNavigate('signin'); // Redirect to sign-in page after simulated sign-up
+        try {
+            const response = await fetch(`${API_BASE_URL}/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Sign-up successful:', data);
+                setSignupSuccess('Registration successful! Please sign in.');
+                // Optionally, redirect to sign-in page after a short delay
+                setTimeout(() => onNavigate('signin'), 2000);
+            } else {
+                console.error('Sign-up failed:', data.message);
+                setSignupError(data.message || 'Registration failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Network error during sign-up:', error);
+            setSignupError('Network error. Please try again later.');
+        }
     };
 
     return (
@@ -118,16 +164,16 @@ const SignUpPage = ({ onNavigate }) => {
                 </p>
                 <form onSubmit={handleSubmit}>
                     <div className="auth-input-group">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="username">Username</label>
                         <div className="auth-input-wrapper">
                             <User size={20} className="auth-icon" />
                             <input
                                 type="text"
-                                id="name"
+                                id="username"
                                 className="auth-input"
-                                placeholder="Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                         </div>
@@ -200,7 +246,7 @@ const SignUpPage = ({ onNavigate }) => {
                     </div>
 
                     <p className="auth-terms-policy">
-                        By creating an account, you agree to our <a href="#">Terms of use</a> and <a href="#" onClick={() => onNavigate('privacy-policy')}>Privacy Policy</a>
+                        By creating an account, you agree to our <a href="#">Terms of use</a> and <a href="#" onClick={() => onNavigate('services')}>Privacy Policy</a>
                     </p>
 
                     <div className="auth-recaptcha-placeholder">
@@ -208,11 +254,14 @@ const SignUpPage = ({ onNavigate }) => {
                             <input type="checkbox" required />
                             I'm not a robot
                         </label>
-                        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" className="recaptcha-logo" />
+                        <img src="[https://www.gstatic.com/recaptcha/api2/logo_48.png](https://www.gstatic.com/recaptcha/api2/logo_48.png)" alt="reCAPTCHA" className="recaptcha-logo" />
                     </div>
 
                     <button type="submit" className="auth-submit-button">Create an account</button>
                 </form>
+
+                {signupError && <p className="auth-helper-text text-red-500">{signupError}</p>}
+                {signupSuccess && <p className="auth-helper-text text-green-500">{signupSuccess}</p>}
 
                 <p className="auth-switch-link">
                     Already have an account? <a href="#" onClick={() => onNavigate('signin')}>Sign In</a>

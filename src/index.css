@@ -322,6 +322,38 @@ body {
   color: var(--primary-green);
   transform: translateY(-2px);
 }
+.react-datepicker__day--excluded,
+.react-datepicker__day--excluded:hover,
+.react-datepicker__day--disabled,
+.react-datepicker__day--disabled:hover {
+  background-color: #ffcccc !important; /* Light red background */
+  color: #c00 !important; /* Darker red text */
+  text-decoration: line-through; /* Optional: cross out the date */
+  cursor: not-allowed !important;
+}
+/* If you want to specifically target the 'booked-date' class passed by dayClassName */
+.react-datepicker__day.booked-date {
+  background-color: #ffcccc !important;
+  color: #c00 !important;
+  text-decoration: line-through;
+  cursor: not-allowed !important;
+}
+
+/* Ensure the input field itself has consistent styling */
+.react-datepicker__input-container .modal-input {
+  width: 100%; /* Ensure it fills the wrapper */
+  padding: 0; /* Reset padding as wrapper handles it */
+  border: none; /* Remove border as wrapper handles it */
+  outline: none; /* Remove outline */
+  background-color: transparent; /* Match wrapper background */
+  color: var(--text-dark); /* Text color */
+  font-size: 1rem; /* Font size */
+}
+
+/* Adjust padding for the calendar icon in modal-input-wrapper if needed */
+.modal-input-wrapper .react-datepicker-wrapper {
+  flex-grow: 1; /* Allow the datepicker to take available space */
+}
 
 /* General services-link style (for header, etc.) - unchanged */
 .services-link {
@@ -2065,6 +2097,35 @@ body {
   text-align: left;
   border: none; /* Remove border */
   background: none;
+}
+.dropdown-username-display {
+  padding: 0.8rem 1.2rem; /* Match dropdown item padding */
+  color: var(--text-light); /* White text */
+  font-weight: 600; /* Make it bold */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+  margin-bottom: 0.5rem; /* Space before first menu item */
+  text-align: left; /* Align text to the left */
+}
+
+/* Ensure account-icon-button is styled correctly since it no longer has text next to it */
+.account-menu-container .account-icon-button {
+  background-color: var(--primary-green); /* Green background */
+  color: var(--text-light); /* White icon */
+  border: none;
+  border-radius: 50%; /* Circular button */
+  width: 40px; /* Size of the circle */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.account-menu-container .account-icon-button:hover {
+  background-color: var(--dark-green); /* Darker green on hover */
+  transform: translateY(-2px);
 }
 
 
